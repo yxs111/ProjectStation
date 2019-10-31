@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.nuoya.mapper.AdminMapper">
+    <resultMap id="AdminMap" type="Admin">
+        <id property="id" column="id" />
+        <result property="email" column="email" />
+        <result property="password" column="password" />
+        <result property="level" column="level" />
+    </resultMap>
+    <select id="list" resultMap="AdminMap">
+        select * from admin
+    </select>
+    <select id="selectAdmin" parameterType="admin" resultType="int">
+
+        select count(1) from admin where email = #{email} and password = #{password}
+    </select>
+    <select id="showAdmin" parameterType="int" resultMap="AdminMap">
+        select * from admin where id = #{id}
+    </select>
+    <insert id="addAdmin" parameterType="admin">
+        insert into admin (id,email,password,level) values (null,#{email},#{password},2)
+    </insert>
+    <update id="editAdmin" parameterType="admin">
+        update user admin email=#{email},password=#{password},level=#{level} where id = #{id}
+    </update>
+    <delete id="deleteAdmin" parameterType="int">
+        delete from admin where id = #{id}
+    </delete>
+</mapper>

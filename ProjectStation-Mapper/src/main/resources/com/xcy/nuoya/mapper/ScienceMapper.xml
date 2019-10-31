@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.nuoya.mapper.ScienceMapper">
+
+    <resultMap id="scienceMap" type="science">
+        <id column="id" property="id"/>
+
+        <result column="science_name" property="scienceName"/>
+        <result column="proj_id" property="projectId"/>
+    </resultMap>
+    <select id="selectAllScience" resultMap="scienceMap">
+        select * from science
+    </select>
+
+    <select id="showScience" parameterType="int" resultMap="scienceMap">
+        select * from science where id = #{id}
+    </select>
+    <insert id="addScience" parameterType="science">
+        insert into science (id,science_name,proj_id) values (null,#{scienceName},#{projectId})
+    </insert>
+    <update id="editScience" parameterType="science">
+        update science set science_name=#{scienceName} where id = #{id}
+    </update>
+    <delete id="deleteScience" parameterType="int">
+        delete from science where id = #{id}
+    </delete>
+    <update id="updateScience" parameterType="science">
+        update science set science_name=#{scienceName} where id = #{id}
+    </update>
+</mapper>

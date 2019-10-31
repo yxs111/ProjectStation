@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ProjectStation.iml" filepath="$PROJECT_DIR$/ProjectStation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjectStation-Mapper/ProjectStation-Mapper.iml" filepath="$PROJECT_DIR$/ProjectStation-Mapper/ProjectStation-Mapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjectStation-Pojo/ProjectStation-Pojo.iml" filepath="$PROJECT_DIR$/ProjectStation-Pojo/ProjectStation-Pojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjectStation-Service/ProjectStation-Service.iml" filepath="$PROJECT_DIR$/ProjectStation-Service/ProjectStation-Service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjectStation-Utils/ProjectStation-Utils.iml" filepath="$PROJECT_DIR$/ProjectStation-Utils/ProjectStation-Utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ProjectStation-Web/ProjectStation-Web.iml" filepath="$PROJECT_DIR$/ProjectStation-Web/ProjectStation-Web.iml" />
+    </modules>
+  </component>
+</project>

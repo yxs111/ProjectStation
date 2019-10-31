@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.nuoya.mapper.ProjectMapper">
+
+    <!--映射的内容放在最顶部-->
+    <!--id 是要写到sql语句的resultType里的，名字随意；type是映射的类型，是完整的包名+类名，我起别名了，所以不用那么写-->
+    <resultMap id="projectMap" type="project">
+        <!--column 必须与数据库的字段保持一致的(sql语句起别名的话，与别名保持一致)；property 是必须和是实体保持一致的-->
+        <!--因为这里一一映射上了，所以不用像以前一样，保持实体字段与数据库字段完全一致-->
+        <id column="id" property="id"/>
+        <result column="proj_name" property="projectName"/>
+        <result column="proj_detail" property="projectDetail"/>
+        <result column="speaker_id" property="speakerId"/>
+        <result column="science_id" property="scienceId"/>
+        <result column="proj_imgurl" property="projectImgUrl"/>
+        <result column="proj_url" property="projectUrl"/>
+        <result column="speaker_name" property="speakerName"/>
+        <result column="science_name" property="scienceName"/>
+
+
+    </resultMap>
+    <sql id="projectSql">
+         select * from (select p.*,s.speaker_name from project p left join speaker s on  p.speaker_id = s.id) p2 left join science c on p2.science_id = c.id</sql>
+    <sql id="whereSql">
+        <where>
+            <if test="projectName != null and projectName != ''">
+                and proj_name like '%${projectName}%'
+            </if>
+            <if test="speakerId != 0">
+                and speaker_id = #{speakerId}
+            </if>
+            <if test="scienceId != 0">
+                and science_id = #{scienceId}
+            </if>
+        </where>
+    </sql>
+    <select id="getProjectList" resultMap="projectMap">
+        <include refid="projectSql"/>
+        <!--如果是#{} 不能左右两边直接拼接，要么使用函数，要么使用${}
+        and title like CONCAT('%',#{title},'%') 或者
+        and title like '%${title}%'
+        -->
+        <include refid="whereSql"/>
+        LIMIT ${begin},${rows}
+    </select>
+    <select id="getCount" parameterType="Project" resultType="int">
+        select count(1) from project
+        <include refid="whereSql"/>
+    </select>
+    <delete id="deleteProjects" parameterType="map">
+        DELETE from project where id in
+        <foreach collection="ids" item="id" index="index" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteProject" parameterType="int">
+         DELETE from project where id = #{id}
+    </delete>
+    <select id="projectId" parameterType="int" resultMap="projectMap">
+        select * from project where id = #{id}
+    </select>
+    <insert id="addProject" parameterType="project">
+        insert into project (id,proj_name,speaker_id,science_id,proj_detail,proj_imgurl,proj_url) values (null,#{projectName},#{speakerId},#{scienceId},#{projectDetail},#{projectImgUrl},#{projectUrl})
+    </insert>
+    <update id="editProject" parameterType="Project">
+         update project set proj_name=#{projectName},speaker_id=#{speakerId},science_id=#{scienceId},proj_detail=#{projectDetail} where id=#{id}
+    </update>
+    <select id="selectAllProject" resultMap="projectMap">
+        select p.*, sp.speaker_name, sc.science_name
+        from project p,speaker sp,science sc
+        where p.speaker_id = sp.id
+        and p.science_id = sc.id
+    </select>
+
+</mapper>

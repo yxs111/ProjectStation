@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ProjectStation-Web:war">
+    <output-path>$PROJECT_DIR$/ProjectStation-Web/target</output-path>
+    <root id="archive" name="ProjectStation-Web-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ProjectStation-Web:war exploded" />
+    </root>
+  </artifact>
+</component>

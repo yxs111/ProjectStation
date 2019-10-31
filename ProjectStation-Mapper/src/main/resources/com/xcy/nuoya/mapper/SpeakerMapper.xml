@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xcy.nuoya.mapper.SpeakerMapper">
+    <resultMap id="speakerMap" type="Speaker">
+        <id column="id" property="id"/>
+        <result column="speaker_name" property="speakerName"/>
+        <result column="job_id" property="jobId"/>
+        <result column="speaker_detail" property="speakerDetail"/>
+        <result column="speaker_imgurl" property="speakerImgUrl"/>
+        <result column="qq_qrcode" property="qqQrCode"/>
+        <result column="vx_qrcode" property="vxQrCode"/>
+        <result column="job_name" property="jobName"/>
+    </resultMap>
+    <delete id="deleteSpeakerById" parameterType="int">
+        delete from speaker where id = #{id}
+    </delete>
+
+    <delete id="deleteSpeakersByIds" parameterType="com.xcy.nuoya.pojo.SpeakerVo">
+        delete from speaker where
+        <if test="idList != null and idList.size() != 0">
+            <foreach collection="idList" item="sid" open=" id in (" close=")" separator=",">
+                #{sid}
+            </foreach>
+        </if>
+    </delete>
+
+    <select id="speakerList" resultMap="speakerMap">
+        select s.*, j.job_name from speaker s left join job j on s.job_id = j.id
+    </select>
+
+    <select id="selectSpeakerById" resultMap="speakerMap" parameterType="int">
+        select s.*, j.job_name from speaker s left join job j on s.job_id = j.id where s.id = #{id}
+    </select>
+
+    <select id="selectSpeakerByName" resultMap="speakerMap" parameterType="string">
+        select s.*, j.job_name from speaker s left join job j on s.job_id = j.id where s.speaker_name like '%${speakerName}%'
+    </select>
+
+    <insert id="saveSpeaker" parameterType="Speaker">
+        insert into speaker values (null,#{speakerName},#{jobId},#{speakerDetail},#{speakerImgUrl},#{qqQrCode},#{vxQrCode})
+    </insert>
+
+    <update id="updateSpeaker" parameterType="Speaker">
+        update speaker set speaker_name = #{speakerName},job_id=#{jobId}, speaker_imgurl = #{speakerImgUrl}, speaker_detail = #{speakerDetail}, qq_qrcode = #{qqQrCode}, vx_qrcode = #{vxQrCode} where id = #{id};
+    </update>
+    <select id="selectAllSpeaker" resultMap="speakerMap">
+        select s.*, j.job_name
+        from speaker s, job j
+        where j.id = s.job_id
+    </select>
+</mapper>
